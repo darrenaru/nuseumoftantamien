@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (existingItem) {
           existingItem.quantity += 1;
       } else {
-          cart.push({ ...product, quantity: 1, notes: "" }); // Initialize notes as empty
+          cart.push({ ...product, quantity: 1, notes: "" });
       }
       saveCart();
       renderCart();
@@ -48,7 +48,6 @@ document.addEventListener("DOMContentLoaded", function () {
       if (item) {
           item.notes = notes;
           saveCart();
-          renderCart();
           window.dispatchEvent(new Event('cartUpdated'));
       }
   };
@@ -63,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Render cart items
   function renderCart() {
+      if (!cartItemsContainer) return; // Prevent null reference
       cartItemsContainer.innerHTML = "";
       if (cart.length === 0) {
           cartItemsContainer.innerHTML = '<p class="text-center">Your cart is empty.</p>';
@@ -119,28 +119,32 @@ document.addEventListener("DOMContentLoaded", function () {
       }
   });
 
-  // Event delegation for notes input
+  // Debounce function to limit how often a function is called
+  function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+          const later = () => {
+              clearTimeout(timeout);
+              func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+      };
+  }
+
+  // Event delegation for notes input with debouncing
   cartItemsContainer.addEventListener("input", function (event) {
       const target = event.target;
       if (target.classList.contains("cart-notes")) {
           const cartItem = target.closest(".cart-item");
+          if (!cartItem) return;
           const productId = cartItem.getAttribute("data-id");
-          const item = cart.find(item => item.id === productId);
-          if (item) {
-              item.notes = target.value;
-              saveCart();
-              const isFocused = document.activeElement === target;
-              const cursorPosition = target.selectionStart;
-              renderCart();
-              if (isFocused) {
-                  const newInput = cartItemsContainer.querySelector(`[data-id="${productId}"] .cart-notes`);
-                  if (newInput) {
-                      newInput.focus();
-                      newInput.setSelectionRange(cursorPosition, cursorPosition);
-                  }
-              }
-              window.dispatchEvent(new Event('cartUpdated'));
-          }
+          const debouncedUpdateNotes = debounce((id, value) => {
+              window.updateNotes(id, value);
+              // Optionally re-render cart if needed (e.g., to sync UI)
+              // renderCart();
+          }, 500); // Increased to 500ms for smoother typing
+          debouncedUpdateNotes(productId, target.value);
       }
   });
 
@@ -174,7 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Show confirmation
       alert(orderSummary);
 
-      // Clear cart after submission (optional, comment out if not desired)
+      // Clear cart after submission
       cart = [];
       saveCart();
       renderCart();
