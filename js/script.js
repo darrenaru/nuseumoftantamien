@@ -164,6 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Prepare order data
       const order = {
+          id: Date.now().toString(), // Unique ID based on timestamp
           items: cart.map(item => ({
               id: item.id,
               title: item.title,
@@ -171,10 +172,16 @@ document.addEventListener("DOMContentLoaded", function () {
               price: item.price,
               notes: item.notes
           })),
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
+          status: "Pending" // Initial status
       };
 
-      // Save order to localStorage (temporary, replace with database call later)
+      // Save order to localStorage (mock database)
+      let orders = JSON.parse(localStorage.getItem("orders")) || [];
+      orders.push(order);
+      localStorage.setItem("orders", JSON.stringify(orders));
+
+      // For backward compatibility, save as lastOrder
       localStorage.setItem("lastOrder", JSON.stringify(order));
 
       // Render order summary in modal
