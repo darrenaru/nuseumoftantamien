@@ -95,7 +95,30 @@
         </div>
       </div>
     </div>
-        
+
+    <!-- ORDER CONFIRMATION MODAL -->
+    <div class="modal fade" id="orderConfirmationModal" tabindex="-1" aria-labelledby="orderConfirmationModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="background-color: var(--secondary-color); border-radius: 15px;">
+          <div class="modal-header" style="background-color: var(--text-color); color: #fff;">
+            <h5 class="modal-title" id="orderConfirmationModalLabel" style="font-family: 'Inter Bold', sans-serif;">Order Confirmation</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" style="background-color: var(--primary-color); color: var(--text-color);">
+            <h4 class="text-center mb-4" style="font-family: 'Inter Bold', sans-serif;">Thank You for Your Order!</h4>
+            <div id="orderSummary" class="px-3">
+              <p class="text-center" style="font-family: 'Inter', sans-serif;">Loading order details...</p>
+            </div>
+          </div>
+          <div class="modal-footer" style="background-color: var(--primary-color);">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" style="background-color: var(--text-color); border-radius: 90px; padding: 10px 20px;">
+              Back to Menu
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="js/script.js"></script>
     <script src="js/product.js"></script>
     <script

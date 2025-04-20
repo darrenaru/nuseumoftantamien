@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const clearCartButton = document.getElementById("clearCart");
   const submitOrderButton = document.getElementById("submitOrder");
   const cartCountElement = document.getElementById("cartCount");
+  const orderSummaryContainer = document.getElementById("orderSummary");
 
   // Load cart from localStorage or initialize empty
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -141,9 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
           const productId = cartItem.getAttribute("data-id");
           const debouncedUpdateNotes = debounce((id, value) => {
               window.updateNotes(id, value);
-              // Optionally re-render cart if needed (e.g., to sync UI)
-              // renderCart();
-          }, 500); // Increased to 500ms for smoother typing
+          }, 500);
           debouncedUpdateNotes(productId, target.value);
       }
   });
@@ -163,26 +162,77 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
       }
 
-      // Generate order summary
-      let orderSummary = "Order Submitted!\n\nItems:\n";
-      cart.forEach(item => {
-          orderSummary += `${item.title} x${item.quantity} (Rp ${item.price.toLocaleString('id-ID')})`;
-          if (item.notes) {
-              orderSummary += ` - Notes: ${item.notes}`;
-          }
-          orderSummary += "\n";
-      });
-      const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-      orderSummary += `\nTotal: Rp ${total.toLocaleString('id-ID')}`;
+      // Prepare order data
+      const order = {
+          items: cart.map(item => ({
+              id: item.id,
+              title: item.title,
+              quantity: item.quantity,
+              price: item.price,
+              notes: item.notes
+          })),
+          timestamp: new Date().toISOString()
+      };
 
-      // Show confirmation
-      alert(orderSummary);
+      // Save order to localStorage (temporary, replace with database call later)
+      localStorage.setItem("lastOrder", JSON.stringify(order));
 
-      // Clear cart after submission
+      // Render order summary in modal
+      if (orderSummaryContainer) {
+          const total = order.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+          let summaryHTML = `
+              <h5 style="color: var(--text-color); font-family: 'Inter Bold', sans-serif;">Order Details</h5>
+              <table class="table table-bordered" style="background-color: var(--secondary-color); color: var(--text-color);">
+                  <thead style="background-color: var(--text-color); color: #fff;">
+                      <tr>
+                          <th>Item</th>
+                          <th>Quantity</th>
+                          <th>Price</th>
+                          <th>Notes</th>
+                          <th>Subtotal</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+          `;
+          order.items.forEach(item => {
+              summaryHTML += `
+                  <tr>
+                      <td style="font-family: 'Inter', sans-serif;">${item.title}</td>
+                      <td style="font-family: 'Inter', sans-serif;">${item.quantity}</td>
+                      <td style="font-family: 'Inter', sans-serif;">Rp ${item.price.toLocaleString('id-ID')}</td>
+                      <td style="font-family: 'Inter', sans-serif;">${item.notes || '-'}</td>
+                      <td style="font-family: 'Inter', sans-serif;">Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</td>
+                  </tr>
+              `;
+          });
+          summaryHTML += `
+                  </tbody>
+              </table>
+              <h5 class="text-end" style="color: var(--text-color); font-family: 'Inter Bold', sans-serif;">
+                  Total: Rp ${total.toLocaleString('id-ID')}
+              </h5>
+          `;
+          orderSummaryContainer.innerHTML = summaryHTML;
+      }
+
+      // Clear cart
       cart = [];
       saveCart();
       renderCart();
       window.dispatchEvent(new Event('cartUpdated'));
+
+      // Close cart offcanvas and show order confirmation modal
+      const cartOffcanvas = document.getElementById("cartOffcanvas");
+      const offcanvasInstance = bootstrap.Offcanvas.getInstance(cartOffcanvas);
+      if (offcanvasInstance) {
+          offcanvasInstance.hide();
+      }
+
+      const orderModal = new bootstrap.Modal(document.getElementById("orderConfirmationModal"), {
+          backdrop: 'static',
+          keyboard: false
+      });
+      orderModal.show();
   });
 
   // Initial cart render
