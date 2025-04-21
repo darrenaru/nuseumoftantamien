@@ -54,8 +54,8 @@ body {
     transform: scaleX(0.5);
 }
 
-.navbar .nav-item a.active::after {
-  transform: scaleX(0.5);
+.navbar .nav-item a.nav-link.active::after {
+    transform: scaleX(0.5);
 }
 
 /* CONTENT */
@@ -138,6 +138,11 @@ body {
 
 .pt-5 .justify-text {
   text-align: justify;
+}
+
+/* SECTION OFFSET */
+section[id] {
+  scroll-margin-top: 80px;
 }
 
 /* MENU */
@@ -602,8 +607,8 @@ body {
     transform: scaleX(0.0);
   }
 
-  .navbar .nav-item a.active::after {
-    transform: scaleX(0.0);
+  .navbar .nav-item a.nav-link.active::after {
+    transform: scaleX(0.5);
   }
 
   .cart-toggle {
