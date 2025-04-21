@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Nuseum Of Tanta Mien - Orders</title>
+    <title>Nuseum Of Tanta Mien - Cashier Dashboard</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -57,38 +57,34 @@
       </div>
     </nav>
 
-    <!-- ORDERS SECTION -->
+    <!-- CASHIER ORDERS SECTION -->
     <section class="container pt-5 mt-5">
       <h1 class="text-center mb-5 position-relative">
-        <b>Customer Orders</b>
+        <b>Cashier Order Management</b>
         <span class="title-underline"></span>
       </h1>
       <div class="row justify-content-center">
         <div class="col-12">
           <div class="card" style="background-color: var(--secondary-color); border-radius: 15px;">
             <div class="card-body">
-              <h4 class="text-center mb-4" style="font-family: 'Inter Bold', sans-serif;">All Orders</h4>
+              <h4 class="text-center mb-4" style="font-family: 'Inter Bold', sans-serif;">All Customer Orders</h4>
               <div class="table-responsive">
                 <table class="table table-bordered orders-table">
                   <thead>
                     <tr>
+                      <th>Order ID</th>
+                      <th>Timestamp</th>
                       <th>Menu Items</th>
                       <th>Special Requests</th>
                       <th>Qty</th>
                       <th>Subtotal</th>
-                      <th>Order Status</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody id="ordersTableBody">
                     <!-- Orders will be populated here -->
                   </tbody>
                 </table>
-              </div>
-              <h5 class="text-end mt-3" style="color: var(--text-color); font-family: 'Inter Bold', sans-serif;">
-                Total Amount Due: Rp <span id="grandTotal">0</span>
-              </h5>
-              <div class="alert alert-info text-center mt-4" role="alert" style="background-color: var(--primary-color); border-color: var(--text-color); color: var(--text-color); border-radius: 10px;">
-                <strong>Reminder:</strong> Please proceed to the cashier to make your payment.
               </div>
             </div>
           </div>
@@ -99,7 +95,6 @@
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         const ordersTableBody = document.getElementById('ordersTableBody');
-        const grandTotalElement = document.getElementById('grandTotal');
 
         // Retrieve orders from localStorage
         let orders = JSON.parse(localStorage.getItem('orders')) || [];
@@ -107,38 +102,53 @@
         function renderOrders() {
           ordersTableBody.innerHTML = '';
           if (orders.length === 0) {
-            ordersTableBody.innerHTML = '<tr><td colspan="5" class="text-center">No orders found.</td></tr>';
-            grandTotalElement.textContent = '0';
+            ordersTableBody.innerHTML = '<tr><td colspan="7" class="text-center">No orders found.</td></tr>';
             return;
           }
 
-          let grandTotal = 0;
           orders.forEach(order => {
             // Calculate total and prepare item details
             const total = order.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-            grandTotal += total;
             const itemsSummary = order.items.map(item => item.title).join('<br>');
             const notesSummary = order.items.map(item => item.notes || '-').join('<br>');
             const quantitySummary = order.items.map(item => item.quantity).join('<br>');
-            // Assign badge class based on status
-            const statusClass = order.status === 'Served' ? 'bg-success' : order.status === 'Cancelled' ? 'bg-danger' : 'bg-warning';
 
             const rowHTML = `
               <tr>
+                <td style="font-family: 'Inter', sans-serif;">${order.id}</td>
+                <td style="font-family: 'Inter', sans-serif;">${new Date(order.timestamp).toLocaleString('id-ID')}</td>
                 <td style="font-family: 'Inter', sans-serif;">${itemsSummary}</td>
                 <td style="font-family: 'Inter', sans-serif;">${notesSummary}</td>
                 <td style="font-family: 'Inter', sans-serif;">${quantitySummary}</td>
                 <td style="font-family: 'Inter', sans-serif;">Rp ${total.toLocaleString('id-ID')}</td>
-                <td style="font-family: 'Inter', sans-serif;">
-                  <span class="badge ${statusClass}">${order.status}</span>
+                <td>
+                  <select class="status-select form-select" data-id="${order.id}">
+                    <option value="Pending" ${order.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                    <option value="Served" ${order.status === 'Served' ? 'selected' : ''}>Served</option>
+                    <option value="Cancelled" ${order.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+                  </select>
                 </td>
               </tr>
             `;
             ordersTableBody.insertAdjacentHTML('beforeend', rowHTML);
           });
 
-          // Display grand total
-          grandTotalElement.textContent = grandTotal.toLocaleString('id-ID');
+          // Add event listeners for status updates
+          document.querySelectorAll('.status-select').forEach(select => {
+            select.addEventListener('change', (event) => {
+              const orderId = event.target.getAttribute('data-id');
+              const newStatus = event.target.value;
+
+              // Update order status in localStorage
+              orders = orders.map(order => 
+                order.id === orderId ? { ...order, status: newStatus } : order
+              );
+              localStorage.setItem('orders', JSON.stringify(orders));
+
+              // Re-render to reflect changes
+              renderOrders();
+            });
+          });
         }
 
         // Initial render
@@ -151,5 +161,6 @@
       integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
       crossorigin="anonymous"
     ></script>
-  </body>
+  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'933a18a98acbbd37',t:'MTc0NTIwOTMwNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body>
 </html>

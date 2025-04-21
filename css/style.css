@@ -477,6 +477,87 @@ body {
   box-shadow: 0 0 5px rgba(54, 45, 37, 0.3);
 }
 
+/* ORDERS TABLE STYLING */
+.orders-table {
+  background-color: var(--primary-color);
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.orders-table thead {
+  background-color: var(--text-color);
+  color: #fff;
+}
+
+.orders-table th {
+  font-family: 'Inter Bold', sans-serif;
+  font-size: 1rem;
+  padding: 15px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.orders-table tbody tr {
+  transition: background-color 0.3s ease;
+}
+
+.orders-table tbody tr:nth-child(odd) {
+  background-color: #f9e9c8; /* Slightly darker than --primary-color for contrast */
+}
+
+.orders-table tbody tr:hover {
+  background-color: #e6d6b3; /* Slightly darker hover effect */
+}
+
+.orders-table td {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  padding: 12px;
+  border: 1px solid #d3c6a3; /* Subtle border color */
+  vertical-align: middle;
+}
+
+.orders-table td:nth-child(1), /* Menu Items */
+.orders-table td:nth-child(2) /* Special Requests */ {
+  text-align: left;
+}
+
+.orders-table td:nth-child(3), /* Qty */
+.orders-table td:nth-child(4), /* Subtotal */
+.orders-table td:nth-child(5) /* Order Status */ {
+  text-align: center;
+}
+
+.orders-table th:nth-child(5) /* Order Status Header */ {
+  text-align: center;
+}
+
+.orders-table .badge {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 12px;
+  display: inline-block; /* Ensures badge is centered properly */
+}
+
+.orders-table .bg-warning {
+  background-color: #ffc107 !important;
+  color: #333 !important;
+}
+
+.orders-table .bg-success {
+  background-color: #28a745 !important;
+  color: #fff !important;
+}
+
+.orders-table .bg-danger {
+  background-color: #dc3545 !important;
+  color: #fff !important;
+}
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
   .col-md-6 .img-fluid {
@@ -539,6 +620,17 @@ body {
 
   .cart-notes {
     max-width: 150px;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+
+  .orders-table .badge {
+    font-size: 0.75rem;
+    padding: 4px 8px;
   }
 
   #clearCart, #submitOrder {
