@@ -563,6 +563,16 @@ section[id] {
   color: #fff !important;
 }
 
+/* FOOTER */
+.footer {
+  margin-top: 60px; /* Ensure space above footer */
+}
+
+/* Add padding before footer */
+section:last-of-type {
+  margin-bottom: 60px; /* Adds padding between the last section and footer */
+}
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
   .col-md-6 .img-fluid {
@@ -579,7 +589,7 @@ section[id] {
 
   .line {
     display: block;
-    border-top: 1px solid black;
+    border-top: 1px solid var(--text-color);
     width: 50%;
     margin: 0 auto;
   }
@@ -608,7 +618,7 @@ section[id] {
   }
 
   .navbar .nav-item a.nav-link.active::after {
-    transform: scaleX(0); /* Hilangkan garis bawah pada active di mobile */
+    transform: scaleX(0); /* Remove underline on active in mobile */
   }
 
   .cart-toggle {
@@ -646,5 +656,14 @@ section[id] {
   .status-select {
     font-size: 0.8rem;
     padding: 4px 8px;
+  }
+
+  /* Adjust footer spacing for mobile */
+  section:last-of-type {
+    margin-bottom: 40px;
+  }
+
+  .footer {
+    margin-top: 40px;
   }
 }
