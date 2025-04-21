@@ -608,7 +608,7 @@ section[id] {
   }
 
   .navbar .nav-item a.nav-link.active::after {
-    transform: scaleX(0.5);
+    transform: scaleX(0); /* Hilangkan garis bawah pada active di mobile */
   }
 
   .cart-toggle {
