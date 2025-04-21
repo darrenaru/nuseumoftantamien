@@ -18,6 +18,13 @@
       rel="stylesheet"
     />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Leaflet CSS for map -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
   </head>
 
   <body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="100" tabindex="0">
@@ -72,7 +79,6 @@
             <a href="menu.html" class="browse-more">
               <button>Order Now</button>
             </a>
-            
           </div>
           <img
             class="img-fluid w-50 d-none d-sm-block ms-auto"
@@ -83,81 +89,115 @@
       </div>
     </section>
 
-    <!-- BEST SELLER CONTENT-->
-
+    <!-- BEST SELLER CONTENT -->
     <section id="home" class="best-seller-title py-5 best-seller-bg">
-
       <div class="container py-5">
-
         <h1 class="text-center mb-5 position-relative">
           <b>Our Best Seller</b>
           <span class="title-underline"></span>
         </h1>
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-12 col-md-3 mb-3">
-            <h4 class="text-center text">Americano</h4>
-            <img src="images/kopi-best-seller.png" class="img-fluid" alt="Gambar 1">
-            <div class="line mx-auto mb-3"></div>
-            <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis harum numquam quis? Culpa autem accusantium repudiandae officiis accusamus architecto, dignissimos ipsam inventore harum et minus incidunt deserunt cum hic placeat.</p>
-          </div>
-          <div class="col-12 col-md-3 mb-3">
-            <h4 class="text-center">Vanilla Latte</h4>
-            <img src="images/kopi-best-seller.png" class="img-fluid" alt="Gambar 2">
-            <div class="line mx-auto mb-3"></div>
-            <p class="text-center">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quos quia accusamus perferendis pariatur dignissimos repellat nobis perspiciatis tempore, at saepe! Eius nihil repudiandae dolor odit in vel. Repudiandae, praesentium temporibus.</p>
-          </div>
-          <div class="col-12 col-md-3 mb-3">
-            <h4 class="text-center">Hazelnut Latte</h4>
-            <img src="images/kopi-best-seller.png" class="img-fluid" alt="Gambar 3">
-            <div class="line mx-auto mb-3"></div>
-            <p class="text-center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam possimus, laudantium voluptate tenetur doloremque commodi voluptas dolorem tempora voluptatum a totam fugit ducimus placeat rem iure itaque maxime ex atque!</p>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-12 col-md-3 mb-3">
+              <h4 class="text-center text">Americano</h4>
+              <img src="images/kopi-best-seller.png" class="img-fluid" alt="Gambar 1">
+              <div class="line mx-auto mb-3"></div>
+              <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis harum numquam quis? Culpa autem accusantium repudiandae officiis accusamus architecto, dignissimos ipsam inventore harum et minus incidunt deserunt cum hic placeat.</p>
+            </div>
+            <div class="col-12 col-md-3 mb-3">
+              <h4 class="text-center">Vanilla Latte</h4>
+              <img src="images/kopi-best-seller.png" class="img-fluid" alt="Gambar 2">
+              <div class="line mx-auto mb-3"></div>
+              <p class="text-center">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quos quia accusamus perferendis pariatur dignissimos repellat nobis perspiciatis tempore, at saepe! Eius nihil repudiandae dolor odit in vel. Repudiandae, praesentium temporibus.</p>
+            </div>
+            <div class="col-12 col-md-3 mb-3">
+              <h4 class="text-center">Hazelnut Latte</h4>
+              <img src="images/kopi-best-seller.png" class="img-fluid" alt="Gambar 3">
+              <div class="line mx-auto mb-3"></div>
+              <p class="text-center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam possimus, laudantium voluptate tenetur doloremque commodi voluptas dolorem tempora voluptatum a totam fugit ducimus placeat rem iure itaque maxime ex atque!</p>
+            </div>
           </div>
         </div>
       </div>
     </section>
-    
+
     <!-- ABOUT CONTENT -->
     <section id="about" class="about-section py-5">
-      <h1 class="text-center mb-5 position-relative">
-        <b>About Us</b>
-        <span class="title-underline"></span>
-      </h1>
-    
       <div class="container">
-        <div class="row align-items-center">
-          
-          <div class="col-md-6 mb-4 mb-md-0">
-            <img src="images/foto-kafe.jpg" class="img-fluid rounded w-75" alt="Gambar Kafe">
+        <h1 class="text-center mb-5 position-relative" data-aos="fade-up">
+          <b>About Nuseum of Tanta Mien</b>
+          <span class="title-underline"></span>
+        </h1>
+        <div class="row align-items-center mb-5">
+          <div class="col-md-6 mb-4 mb-md-0" data-aos="fade-right">
+            <img src="images/foto-kafe.jpg" class="img-fluid rounded w-100" alt="Nuseum of Tanta Mien Café" style="max-width: 500px; display: block; margin: 0 auto;">
           </div>
-    
-          
-          <div class="col-md-6 text-md-start text-center text-black">
-            <p class="fs-1 pt-5"><b><span>nyoo'zēǝm</span></b></p> 
+          <div class="col-md-6 text-md-start text-center" data-aos="fade-left">
+            <h2 class="fs-1 mb-3"><b>Nyoo'zēǝm</b></h2>
             <p class="fs-5">
-              Diambil dari kata <b>nyoo'zēǝm</b> yang berarti Ruang koleksi benda tua, pertunjukan seni, dan pemajangan hasil karya tangan dari manusia di sekitar lingkungan kami berada. Kami berniat membesarkan asa dari karya seni yang tidak biasa.
+              The name <b>Nuseum</b> draws inspiration from the word "museum," symbolizing a space that preserves and celebrates art, heritage, and human creativity. At Nuseum of Tanta Mien, we honor the legacy of Ny. Mien, a remarkable woman of Chinese descent whose life was a tapestry of compassion, cultural harmony, and artistic expression.
+            </p>
+            <p class="fs-5">
+              Our café is more than a place to enjoy exceptional coffee and cuisine—it's a tribute to Ny. Mien’s vision of fostering community through good deeds and shared stories. Join us to experience the warmth of her spirit in every cup and bite.
             </p>
           </div>
-
-
-          <div class="pt-5 fs-5">
-            <p style="text-align: justify;">Ny. Mien, seorang pedagang dengan darah keturunan Tiongkok, memiliki keluarga besar yang sudah lintas etnis. Beliau memiliki satu kehebatan yang saat ini sangat jarang dimiliki orang, yaitu kemampuan untuk mengasihi makhluk hidup dan alam. Ny. Mien juga pernah tinggal di Minahasa dan Tagulandang, yang membuat pemikiran beliau tentang etika dan kesopanan dalam pergaulan sangat baik.
-              Banyak cerita yang bisa kita dengar dari beliau. Torang coba pelan-pelan kumpulkan di @nuseumoftantamien, lantai 2. Nanti kalau ada waktu, nyong dan nona Lia akan ada di sana.
-              <b>#KecupBibirSmengken</b> bukan mitos atau kata-kata erotis, tapi memang seperti itu adanya. Sampai saat ini, Ny. Mien masih suka bergaya dan ingin tampil prima.
-              "Segala kebiasaan baik harus dimulai dari kecil. Saat sudah dewasa, kebiasaan itu akan lebih mungkin untuk berlanjut." – Kata-kata bijak dari Oma Mien tentang kebiasaan baik. Kecup bibir smengken dari kami untuk Oma Mien, we love you a lot, Grandma!</p>
+        </div>
+        <div class="row">
+          <div class="col-12 text-center" data-aos="fade-up">
+            <h3 class="fs-2 mb-4" style="font-family: 'Inter Bold', sans-serif;">The Legacy of Ny. Mien</h3>
+            <p class="fs-5 mx-auto" style="text-align: justify; max-width: 800px;">
+              Ny. Mien, a beloved merchant with roots in Chinese heritage, lived a life of profound kindness and cultural connection. Having resided in Minahasa and Tagulandang, she embodied grace and wisdom, blending traditions with an open heart. Her ability to cherish all living beings and nature itself set her apart, inspiring those around her.
+              <br><br>
+              Her stories, filled with lessons of ethics and compassion, are preserved at <b>@nuseumoftantamien</b> on our second floor—a space dedicated to her legacy. Visit us to hear tales of her vibrant life, from her stylish flair to her timeless wisdom: <em>“Good habits start small and grow with you.”</em> With a nod to her charm, we say <b>#KecupBibirSmengken</b>, celebrating Oma Mien’s enduring love and vitality.
+            </p>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-12" data-aos="zoom-in">
+            <h3 class="text-center fs-2 mb-4" style="font-family: 'Inter Bold', sans-serif;">Visit Us</h3>
+            <div id="map" class="cafe-map rounded" style="height: 300px; width: 100%; max-width: 800px; margin: 0 auto; border: 2px solid var(--text-color);"></div>
+            <p class="text-center mt-3 fs-5">Find us in the heart of Manado, where culture and coffee converge.</p>
           </div>
         </div>
       </div>
     </section>
-    
-    
-    
-     
 
+    <!-- Scripts -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
       crossorigin="anonymous"
     ></script>
+    <!-- Leaflet JS for map -->
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      // Initialize AOS
+      AOS.init({
+        duration: 800,
+        once: true,
+      });
+
+      // Initialize Leaflet map
+      const map = L.map('map').setView([1.4872124759414749, 124.84803229735728], 15);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 18,
+      }).addTo(map);
+      L.marker([1.4872124759414749, 124.84803229735728])
+        .addTo(map)
+        .bindPopup('<b>Nuseum of Tanta Mien</b><br>Manado, Indonesia')
+        .openPopup();
+
+      // Ensure map resizes correctly
+      window.addEventListener('resize', () => {
+        map.invalidateSize();
+      });
+    </script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'933a6a802e15455d',t:'MTc0NTIxMjY1Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
   </body>
 </html>
