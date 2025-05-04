@@ -80,7 +80,6 @@
                     </tr>
                   </thead>
                   <tbody id="ordersTableBody">
-                    <!-- Orders will be populated here -->
                   </tbody>
                 </table>
               </div>
@@ -153,7 +152,7 @@
         const ordersTableBody = document.getElementById('ordersTableBody');
         const grandTotalElement = document.getElementById('grandTotal');
 
-        // Retrieve orders from localStorage
+
         let orders = JSON.parse(localStorage.getItem('orders')) || [];
 
         function renderOrders() {
@@ -166,7 +165,7 @@
 
           let grandTotal = 0;
           orders.forEach(order => {
-            // Calculate total and prepare item details
+
             const total = order.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
             grandTotal += total;
             const itemsSummary = order.items.map(item => item.title).join('<br>');
@@ -189,11 +188,11 @@
             ordersTableBody.insertAdjacentHTML('beforeend', rowHTML);
           });
 
-          // Display grand total
+
           grandTotalElement.textContent = grandTotal.toLocaleString('id-ID');
         }
 
-        // Initial render
+
         renderOrders();
       });
     </script>

@@ -18,7 +18,6 @@
       rel="stylesheet"
     />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <!-- Leaflet CSS for map -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -28,7 +27,6 @@
   </head>
 
   <body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="80" tabindex="0">
-    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg fixed-top py-2">
       <div class="container">
         <a class="navbar-brand" href="#">
@@ -227,13 +225,11 @@
     ></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-      // Initialize AOS
       AOS.init({
         duration: 800,
         once: true,
       });
 
-      // Initialize Leaflet map
       const map = L.map('map').setView([1.4872124759414749, 124.84803229735728], 15);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -244,19 +240,19 @@
         .bindPopup('<b>Nuseum of Tanta Mien</b><br>Manado, Indonesia')
         .openPopup();
 
-      // Ensure map resizes correctly
+
       window.addEventListener('resize', () => {
         map.invalidateSize();
       });
 
-      // Function to update active navbar link based on scroll position
+
       function updateActiveNavLink() {
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
         let currentSection = '';
         const isDesktop = window.innerWidth >  Econometrics
         sections.forEach(section => {
-          const sectionTop = section.offsetTop - 100; // Adjust for navbar height
+          const sectionTop = section.offsetTop - 100; 
           const sectionBottom = sectionTop + section.offsetHeight;
           const scrollPosition = window.scrollY;
 
@@ -268,28 +264,28 @@
         navLinks.forEach(link => {
           link.classList.remove('active');
           const href = link.getAttribute('href').split('#')[1];
-          if (isDesktop && href === currentSection) { // Only apply active class on desktop
+          if (isDesktop && href === currentSection) { 
             link.classList.add('active');
           }
         });
       }
 
-      // Manage navbar active state on click
+      
       document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
         link.addEventListener('click', function () {
           const isDesktop = window.innerWidth > 768;
           document.querySelectorAll('.navbar-nav .nav-link').forEach(l => l.classList.remove('active'));
-          if (isDesktop) { // Only apply active class on desktop
+          if (isDesktop) { 
             this.classList.add('active');
           }
         });
       });
 
-      // Update active link on scroll and resize
+      
       window.addEventListener('scroll', updateActiveNavLink);
       window.addEventListener('resize', updateActiveNavLink);
 
-      // Initial call to set active link on page load
+      
       updateActiveNavLink();
     </script>
   </body>

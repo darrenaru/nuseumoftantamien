@@ -8,15 +8,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const cartCountElement = document.getElementById("cartCount");
     const orderSummaryContainer = document.getElementById("orderSummary");
   
-    // Load cart from localStorage or initialize empty
+    
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
   
-    // Save cart to localStorage
+    
     function saveCart() {
         localStorage.setItem("cart", JSON.stringify(cart));
     }
   
-    // Add item to cart
+    
     window.addToCart = function(product) {
         const existingItem = cart.find(item => item.id === product.id);
         if (existingItem) {
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
         window.dispatchEvent(new Event('cartUpdated'));
     };
   
-    // Update item quantity
+    
     window.updateQuantity = function(productId, change) {
         const item = cart.find(item => item.id === productId);
         if (item) {
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
   
-    // Update item notes
+    
     window.updateNotes = function(productId, notes) {
         const item = cart.find(item => item.id === productId);
         if (item) {
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
   
-    // Remove item from cart
+    
     window.removeFromCart = function(productId) {
         cart = cart.filter(item => item.id !== productId);
         saveCart();
@@ -61,9 +61,9 @@ document.addEventListener("DOMContentLoaded", function () {
         window.dispatchEvent(new Event('cartUpdated'));
     };
   
-    // Render cart items
+    
     function renderCart() {
-        if (!cartItemsContainer) return; // Prevent null reference
+        if (!cartItemsContainer) return; 
         cartItemsContainer.innerHTML = "";
         if (cart.length === 0) {
             cartItemsContainer.innerHTML = '<p class="text-center">Your cart is empty.</p>';
@@ -92,19 +92,19 @@ document.addEventListener("DOMContentLoaded", function () {
             cartItemsContainer.insertAdjacentHTML("beforeend", itemHTML);
         });
   
-        // Calculate and display total
+        
         const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
         cartTotalElement.textContent = total.toLocaleString('id-ID');
   
-        // Update cart count
+        
         const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
         cartCountElement.textContent = itemCount;
   
-        // Enable submit button if cart is not empty
+        
         submitOrderButton.disabled = false;
     }
   
-    // Event delegation for cart item buttons
+    
     cartItemsContainer.addEventListener("click", function (event) {
         const target = event.target;
         const cartItem = target.closest(".cart-item");
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
   
-    // Debounce function to limit how often a function is called
+    
     function debounce(func, wait) {
         let timeout;
         return function executedFunction(...args) {
@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
     }
   
-    // Event delegation for notes input with debouncing
+    
     cartItemsContainer.addEventListener("input", function (event) {
         const target = event.target;
         if (target.classList.contains("cart-notes")) {
@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
   
-    // Clear cart
+    
     clearCartButton.addEventListener("click", () => {
         cart = [];
         saveCart();
@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
         window.dispatchEvent(new Event('cartUpdated'));
     });
   
-    // Submit order
+    
     submitOrderButton.addEventListener("click", () => {
         if (cart.length === 0) {
             alert("Your cart is empty. Please add items before submitting.");
@@ -163,9 +163,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
   
         try {
-            // Prepare order data
+            
             const order = {
-                id: Date.now().toString(), // Unique ID based on timestamp
+                id: Date.now().toString(), 
                 items: cart.map(item => ({
                     id: item.id,
                     title: item.title,
@@ -174,15 +174,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     notes: item.notes || ''
                 })),
                 timestamp: new Date().toISOString(),
-                status: "Pending" // Initial status
+                status: "Pending" 
             };
   
-            // Save order to localStorage
+            
             let orders = JSON.parse(localStorage.getItem("orders")) || [];
             orders.push(order);
             localStorage.setItem("orders", JSON.stringify(orders));
   
-            // Render order summary in modal
+            
             if (orderSummaryContainer) {
                 const total = order.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
                 let summaryHTML = `
@@ -225,13 +225,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 orderSummaryContainer.innerHTML = summaryHTML;
             }
   
-            // Clear cart
+           
             cart = [];
             saveCart();
             renderCart();
             window.dispatchEvent(new Event('cartUpdated'));
   
-            // Close cart offcanvas and show order confirmation modal
+            
             const cartOffcanvas = document.getElementById("cartOffcanvas");
             const offcanvasInstance = bootstrap.Offcanvas.getInstance(cartOffcanvas);
             if (offcanvasInstance) {
@@ -249,16 +249,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
   
-    // Initial cart render
+    
     renderCart();
   
-    // Search functionality
+    
     searchInput.addEventListener("input", function () {
         filterCards();
     });
   
-    // Category filter
-    categorySelect.addEventListener("change", function () {
+        categorySelect.addEventListener("change", function () {
         filterCards();
     });
 });

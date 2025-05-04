@@ -1,132 +1,134 @@
-const products = [
-  {
-    id: "1",
-    title: "Mie Goreng",
-    description: "Mie goreng khas rumahan, simple dan nikmat.",
-    image: "product-list/mie-ayam.jpeg",
-    category: "makanan",
-    price: 25000
-  },
-  {
-    id: "2",
-    title: "Nasi Goreng",
-    description: "Nasi goreng spesial dengan bumbu tradisional.",
-    image: "product-list/mie-ayam.jpeg",
-    category: "makanan",
-    price: 28000
-  },
-  {
-    id: "3",
-    title: "Soto Ayam",
-    description: "Soto ayam hangat dengan kuah rempah khas.",
-    image: "product-list/mie-ayam.jpeg",
-    category: "makanan",
-    price: 30000
-  },
-  {
-    id: "4",
-    title: "Bakso Sapi",
-    description: "Bakso sapi lezat dengan kuah gurih.",
-    image: "product-list/mie-ayam.jpeg",
-    category: "makanan",
-    price: 27000
-  },
-  {
-    id: "5",
-    title: "Ayam Geprek",
-    description: "Ayam crispy pedas dengan sambal khas.",
-    image: "product-list/mie-ayam.jpeg",
-    category: "makanan",
-    price: 32000
-  },
-  {
-    id: "6",
-    title: "Ice Coffee",
-    description: "Kopi dingin spesial dengan rasa khas Tanta Mien.",
-    image: "product-list/vanilla-latte.jpg",
-    category: "minuman",
-    price: 20000
-  },
-  {
-    id: "7",
-    title: "Vanilla Latte",
-    description: "Latte lembut dengan sentuhan vanila yang manis.",
-    image: "product-list/vanilla-latte.jpg",
-    category: "minuman",
-    price: 30000
-  },
-  {
-    id: "8",
-    title: "Mango Smoothie",
-    description: "Smoothie mangga segar yang menyegarkan.",
-    image: "product-list/vanilla-latte.jpg",
-    category: "minuman",
-    price: 25000
-  },
-  {
-    id: "9",
-    title: "Teh Tarik",
-    description: "Teh tarik creamy dengan aroma khas.",
-    image: "product-list/vanilla-latte.jpg",
-    category: "minuman",
-    price: 22000
-  },
-  {
-    id: "10",
-    title: "Lemon Tea",
-    description: "Teh lemon segar dengan rasa asam manis.",
-    image: "product-list/vanilla-latte.jpg",
-    category: "minuman",
-    price: 20000
-  },
-  {
-    id: "11",
-    title: "Chocolate Cake",
-    description: "Kue cokelat lembut dengan rasa premium.",
-    image: "product-list/summer-dessertjpeg.jpeg",
-    category: "dessert",
-    price: 35000
-  },
-  {
-    id: "12",
-    title: "Chocolate Cake",
-    description: "Kue cokelat lembut dengan rasa premium.",
-    image: "product-list/summer-dessertjpeg.jpeg",
-    category: "dessert",
-    price: 32000
-  },
-  {
-    id: "13",
-    title: "Fruit Tart",
-    description: "Tart segar dengan buah-buahan pilihan.",
-    image: "product-list/summer-dessertjpeg.jpeg",
-    category: "dessert",
-    price: 38000
-  },
-  {
-    id: "14",
-    title: "Cheesecake",
-    description: "Cheesecake creamy dengan topping stroberi.",
-    image: "product-list/summer-dessertjpeg.jpeg",
-    category: "dessert",
-    price: 40000
-  },
-  {
-    id: "15",
-    title: "Panna Cotta",
-    description: "Panna cotta lembut dengan saus karamel.",
-    image: "product-list/summer-dessertjpeg.jpeg",
-    category: "dessert",
-    price: 36000
-  }
-];
-
 document.addEventListener('DOMContentLoaded', () => {
   const cardContainer = document.getElementById('cardContainer');
   const searchInput = document.getElementById('searchInput');
   const categorySelect = document.getElementById('categorySelect');
 
-  // Function to render cards
+  // Load products from localStorage or use default products
+  let products = JSON.parse(localStorage.getItem('products')) || [
+    {
+      id: "1",
+      title: "Mie Goreng",
+      description: "Mie goreng khas rumahan, simple dan nikmat.",
+      image: "product-list/mie-ayam.jpeg",
+      category: "makanan",
+      price: 25000
+    },
+    {
+      id: "2",
+      title: "Nasi Goreng",
+      description: "Nasi goreng spesial dengan bumbu tradisional.",
+      image: "product-list/mie-ayam.jpeg",
+      category: "makanan",
+      price: 28000
+    },
+    {
+      id: "3",
+      title: "Soto Ayam",
+      description: "Soto ayam hangat dengan kuah rempah khas.",
+      image: "product-list/mie-ayam.jpeg",
+      category: "makanan",
+      price: 30000
+    },
+    {
+      id: "4",
+      title: "Bakso Sapi",
+      description: "Bakso sapi lezat dengan kuah gurih.",
+      image: "product-list/mie-ayam.jpeg",
+      category: "makanan",
+      price: 27000
+    },
+    {
+      id: "5",
+      title: "Ayam Geprek",
+      description: "Ayam crispy pedas dengan sambal khas.",
+      image: "product-list/mie-ayam.jpeg",
+      category: "makanan",
+      price: 32000
+    },
+    {
+      id: "6",
+      title: "Ice Coffee",
+      description: "Kopi dingin spesial dengan rasa khas Tanta Mien.",
+      image: "product-list/vanilla-latte.jpg",
+      category: "minuman",
+      price: 20000
+    },
+    {
+      id: "7",
+      title: "Vanilla Latte",
+      description: "Latte lembut dengan sentuhan vanila yang manis.",
+      image: "product-list/vanilla-latte.jpg",
+      category: "minuman",
+      price: 30000
+    },
+    {
+      id: "8",
+      title: "Mango Smoothie",
+      description: "Smoothie mangga segar yang menyegarkan.",
+      image: "product-list/vanilla-latte.jpg",
+      description: "Smoothie mangga segar yang menyegarkan.",
+      image: "product-list/vanilla-latte.jpg",
+      category: "minuman",
+      price: 25000
+    },
+    {
+      id: "9",
+      title: "Teh Tarik",
+      description: "Teh tarik creamy dengan aroma khas.",
+      image: "product-list/vanilla-latte.jpg",
+      category: "minuman",
+      price: 22000
+    },
+    {
+      id: "10",
+      title: "Lemon Tea",
+      description: "Teh lemon segar dengan rasa asam manis.",
+      image: "product-list/vanilla-latte.jpg",
+      category: "minuman",
+      price: 20000
+    },
+    {
+      id: "11",
+      title: "Chocolate Cake",
+      description: "Kue cokelat lembut dengan rasa premium.",
+      image: "product-list/summer-dessertjpeg.jpeg",
+      category: "dessert",
+      price: 35000
+    },
+    {
+      id: "12",
+      title: "Tiramisu",
+      description: "Tiramisu klasik dengan lapisan krim lembut.",
+      image: "product-list/summer-dessertjpeg.jpeg",
+      category: "dessert",
+      price: 32000
+    },
+    {
+      id: "13",
+      title: "Fruit Tart",
+      description: "Tart segar dengan buah-buahan pilihan.",
+      image: "product-list/summer-dessertjpeg.jpeg",
+      category: "dessert",
+      price: 38000
+    },
+    {
+      id: "14",
+      title: "Cheesecake",
+      description: "Cheesecake creamy dengan topping stroberi.",
+      image: "product-list/summer-dessertjpeg.jpeg",
+      category: "dessert",
+      price: 40000
+    },
+    {
+      id: "15",
+      title: "Panna Cotta",
+      description: "Panna cotta lembut dengan saus karamel.",
+      image: "product-list/summer-dessertjpeg.jpeg",
+      category: "dessert",
+      price: 36000
+    }
+  ];
+
   function renderCards(filteredProducts) {
     cardContainer.innerHTML = '';
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -159,13 +161,12 @@ document.addEventListener('DOMContentLoaded', () => {
       cardContainer.insertAdjacentHTML('beforeend', cardHTML);
     });
 
-    // Add event listeners to buttons
     document.querySelectorAll('.add-to-cart').forEach(button => {
       button.addEventListener('click', () => {
         const productId = button.getAttribute('data-id');
         const product = products.find(p => p.id === productId);
         window.addToCart(product);
-        renderCards(filteredProducts); // Re-render to show quantity controls
+        renderCards(filteredProducts); 
       });
     });
 
@@ -173,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
       button.addEventListener('click', () => {
         const productId = button.getAttribute('data-id');
         window.updateQuantity(productId, 1);
-        renderCards(filteredProducts); // Re-render to update quantity
+        renderCards(filteredProducts); 
       });
     });
 
@@ -181,12 +182,11 @@ document.addEventListener('DOMContentLoaded', () => {
       button.addEventListener('click', () => {
         const productId = button.getAttribute('data-id');
         window.updateQuantity(productId, -1);
-        renderCards(filteredProducts); // Re-render to update or revert to Order
+        renderCards(filteredProducts); 
       });
     });
   }
 
-  // Filter function
   function filterCards() {
     const searchText = searchInput.value.toLowerCase();
     const selectedCategory = categorySelect.value;
@@ -207,8 +207,16 @@ document.addEventListener('DOMContentLoaded', () => {
   searchInput.addEventListener('input', filterCards);
   categorySelect.addEventListener('change', filterCards);
 
-  // Listen for cart updates from script.js
+  // Update products when cart is updated
   window.addEventListener('cartUpdated', () => {
-    filterCards(); // Re-render cards when cart changes
+    filterCards();
+  });
+
+  // Listen for storage changes to update products
+  window.addEventListener('storage', (event) => {
+    if (event.key === 'products') {
+      products = JSON.parse(event.newValue) || products;
+      filterCards();
+    }
   });
 });
