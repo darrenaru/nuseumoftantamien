@@ -189,7 +189,7 @@
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         // Check authentication
-        const authToken = localStorage.getItem('cashierAuthToken');
+        const authToken = localStorage.getItem('adminAuthToken');
         if (!authToken || authToken !== 'authenticated') {
           window.location.href = 'login.html';
         }
@@ -202,19 +202,12 @@
         const editImageInput = document.getElementById('editProductImage');
         const editImagePreview = document.getElementById('editImagePreview');
 
-        let products = JSON.parse(localStorage.getItem('products')) || [
-          {
-            id: "1",
-            title: "Mie Goreng",
-            description: "Mie goreng khas rumahan, simple dan nikmat.",
-            image: "images/placeholder.jpg",
-            category: "makanan",
-            price: 25000
-          }
-        ];
+        let products = JSON.parse(localStorage.getItem('products')) || [];
 
         function saveProducts() {
           localStorage.setItem('products', JSON.stringify(products));
+          // Dispatch custom event to notify other pages
+          window.dispatchEvent(new Event('productsUpdated'));
         }
 
         // Image upload handler
