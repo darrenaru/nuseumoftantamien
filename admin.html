@@ -193,7 +193,7 @@
         if (!authToken || authToken !== 'authenticated') {
           window.location.href = 'login.html';
         }
-
+    
         const productsTableBody = document.getElementById('productsTableBody');
         const addProductForm = document.getElementById('addProductForm');
         const editProductForm = document.getElementById('editProductForm');
@@ -201,15 +201,23 @@
         const addImagePreview = document.getElementById('addImagePreview');
         const editImageInput = document.getElementById('editProductImage');
         const editImagePreview = document.getElementById('editImagePreview');
-
+    
         let products = JSON.parse(localStorage.getItem('products')) || [];
-
+    
+        // Function to get the next product ID
+        function getNextProductId() {
+          const lastId = localStorage.getItem('lastProductId') || '0';
+          const nextId = parseInt(lastId) + 1;
+          localStorage.setItem('lastProductId', nextId.toString());
+          return nextId.toString();
+        }
+    
         function saveProducts() {
           localStorage.setItem('products', JSON.stringify(products));
           // Dispatch custom event to notify other pages
           window.dispatchEvent(new Event('productsUpdated'));
         }
-
+    
         // Image upload handler
         function handleImageUpload(file, callback) {
           if (file) {
@@ -222,7 +230,7 @@
             callback('images/placeholder.jpg');
           }
         }
-
+    
         // Preview image for add product
         addImageInput.addEventListener('change', (event) => {
           const file = event.target.files[0];
@@ -236,7 +244,7 @@
             addImagePreview.style.display = 'block';
           }
         });
-
+    
         // Preview image for edit product
         editImageInput.addEventListener('change', (event) => {
           const file = event.target.files[0];
@@ -246,14 +254,14 @@
             });
           }
         });
-
+    
         function renderProducts() {
           productsTableBody.innerHTML = '';
           if (products.length === 0) {
             productsTableBody.innerHTML = '<tr><td colspan="7" class="text-center">No products found.</td></tr>';
             return;
           }
-
+    
           products.forEach(product => {
             const rowHTML = `
               <tr>
@@ -271,7 +279,7 @@
             `;
             productsTableBody.insertAdjacentHTML('beforeend', rowHTML);
           });
-
+    
           // Attach event listeners for edit and delete buttons
           document.querySelectorAll('.edit-product').forEach(button => {
             button.addEventListener('click', () => {
@@ -286,7 +294,7 @@
               editImagePreview.style.display = 'block';
             });
           });
-
+    
           document.querySelectorAll('.delete-product').forEach(button => {
             button.addEventListener('click', () => {
               const productId = button.getAttribute('data-id');
@@ -298,14 +306,14 @@
             });
           });
         }
-
+    
         // Add Product Form Submission
         addProductForm.addEventListener('submit', (event) => {
           event.preventDefault();
           const file = addImageInput.files[0];
           handleImageUpload(file, (image) => {
             const newProduct = {
-              id: Date.now().toString(),
+              id: getNextProductId(), // Use sequential ID
               title: document.getElementById('productTitle').value,
               description: document.getElementById('productDescription').value,
               category: document.getElementById('productCategory').value,
@@ -321,7 +329,7 @@
             addImagePreview.style.display = 'none';
           });
         });
-
+    
         // Edit Product Form Submission
         editProductForm.addEventListener('submit', (event) => {
           event.preventDefault();
@@ -343,14 +351,14 @@
             bootstrap.Modal.getInstance(document.getElementById('editProductModal')).hide();
             editImageInput.value = '';
           };
-
+    
           if (file) {
             handleImageUpload(file, updateProduct);
           } else {
             updateProduct(editImagePreview.src || 'images/placeholder.jpg');
           }
         });
-
+    
         // Initial render
         renderProducts();
       });
