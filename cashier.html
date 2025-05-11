@@ -75,6 +75,7 @@
                       <th>Order ID</th>
                       <th>Timestamp</th>
                       <th>Menu Items</th>
+                      <th>Type</th>
                       <th>Special Requests</th>
                       <th>Qty</th>
                       <th>Subtotal</th>
@@ -104,13 +105,14 @@
         function renderOrders() {
           ordersTableBody.innerHTML = '';
           if (orders.length === 0) {
-            ordersTableBody.innerHTML = '<tr><td colspan="7" class="text-center">No orders found.</td></tr>';
+            ordersTableBody.innerHTML = '<tr><td colspan="8" class="text-center">No orders found.</td></tr>';
             return;
           }
 
           orders.forEach(order => {
             const total = order.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
             const itemsSummary = order.items.map(item => item.title).join('<br>');
+            const typeSummary = order.items.map(item => item.category === 'minuman' ? (item.type || 'hot') : '-').join('<br>');
             const notesSummary = order.items.map(item => item.notes || '-').join('<br>');
             const quantitySummary = order.items.map(item => item.quantity).join('<br>');
 
@@ -119,6 +121,7 @@
                 <td style="font-family: 'Inter', sans-serif;">${order.id}</td>
                 <td style="font-family: 'Inter', sans-serif;">${new Date(order.timestamp).toLocaleString('id-ID')}</td>
                 <td style="font-family: 'Inter', sans-serif;">${itemsSummary}</td>
+                <td style="font-family: 'Inter', sans-serif;">${typeSummary}</td>
                 <td style="font-family: 'Inter', sans-serif;">${notesSummary}</td>
                 <td style="font-family: 'Inter', sans-serif;">${quantitySummary}</td>
                 <td style="font-family: 'Inter', sans-serif;">Rp ${total.toLocaleString('id-ID')}</td>
@@ -139,18 +142,15 @@
               const orderId = event.target.getAttribute('data-id');
               const newStatus = event.target.value;
 
-
               orders = orders.map(order => 
                 order.id === orderId ? { ...order, status: newStatus } : order
               );
               localStorage.setItem('orders', JSON.stringify(orders));
 
-
               renderOrders();
             });
           });
         }
-
 
         renderOrders();
       });
@@ -161,5 +161,5 @@
       integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
       crossorigin="anonymous"
     ></script>
-  </body>
+  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93e107524ed3bd26',t:'MTc0Njk1OTcxNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

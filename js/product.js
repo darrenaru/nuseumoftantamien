@@ -47,8 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
       button.addEventListener('click', () => {
         const productId = button.getAttribute('data-id');
         const product = products.find(p => p.id === productId);
-        window.addToCart(product);
-        renderCards(filteredProducts); 
+        window.addToCart({ ...product }); // Type will be set in cart
+        renderCards(filteredProducts);
       });
     });
 
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
       button.addEventListener('click', () => {
         const productId = button.getAttribute('data-id');
         window.updateQuantity(productId, 1);
-        renderCards(filteredProducts); 
+        renderCards(filteredProducts);
       });
     });
 
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
       button.addEventListener('click', () => {
         const productId = button.getAttribute('data-id');
         window.updateQuantity(productId, -1);
-        renderCards(filteredProducts); 
+        renderCards(filteredProducts);
       });
     });
   }

@@ -73,6 +73,7 @@
                   <thead>
                     <tr>
                       <th>Menu Items</th>
+                      <th>Type</th>
                       <th>Special Requests</th>
                       <th>Qty</th>
                       <th>Subtotal</th>
@@ -84,7 +85,7 @@
                 </table>
               </div>
               <h5 class="text-end mt-3" style="color: var(--text-color); font-family: 'Inter Bold', sans-serif;">
-                Total Amount Due: Rp <span id="grandTotal">0</ characteristics
+                Total Amount Due: Rp <span id="grandTotal">0</span>
               </h5>
               <div class="alert alert-info text-center mt-4" role="alert" style="background-color: var(--primary-color); border-color: var(--text-color); color: var(--text-color); border-radius: 10px;">
                 <strong>Reminder:</strong> Please proceed to the cashier to make your payment.
@@ -120,9 +121,9 @@
                 </a>
               </li>
               <li>
-                <a href="mailto:nuseumoftantamien@gmail.com" class="text-decoration-none" style="color: var(--text-color);">
+                <a href="/cdn-cgi/l/email-protection#557b60667060787a7361747b6174787c707b557278747c793b767a78" class="text-decoration-none" style="color: var(--text-color);">
                   <img src="icon/envelope.svg" alt="Gmail" width="20" height="20" class="me-2" style="filter: invert(15%) sepia(20%) saturate(200%) hue-rotate(320deg) brightness(90%) contrast(90%);">
-                  nuseumoftantamien@gmail.com
+                  <span class="__cf_email__" data-cfemail="a08e959385958d8f8694818e94818d89858ea0878d81898cce838f8d">[email&#160;protected]</span>
                 </a>
               </li>
             </ul>
@@ -146,29 +147,27 @@
       </div>
     </footer>
 
-
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
       document.addEventListener('DOMContentLoaded', () => {
         const ordersTableBody = document.getElementById('ordersTableBody');
         const grandTotalElement = document.getElementById('grandTotal');
-
 
         let orders = JSON.parse(localStorage.getItem('orders')) || [];
 
         function renderOrders() {
           ordersTableBody.innerHTML = '';
           if (orders.length === 0) {
-            ordersTableBody.innerHTML = '<tr><td colspan="5" class="text-center">No orders found.</td></tr>';
+            ordersTableBody.innerHTML = '<tr><td colspan="6" class="text-center">No orders found.</td></tr>';
             grandTotalElement.textContent = '0';
             return;
           }
 
           let grandTotal = 0;
           orders.forEach(order => {
-
             const total = order.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
             grandTotal += total;
             const itemsSummary = order.items.map(item => item.title).join('<br>');
+            const typeSummary = order.items.map(item => item.category === 'minuman' ? (item.type || 'hot') : '-').join('<br>');
             const notesSummary = order.items.map(item => item.notes || '-').join('<br>');
             const quantitySummary = order.items.map(item => item.quantity).join('<br>');
             // Assign badge class based on status
@@ -177,6 +176,7 @@
             const rowHTML = `
               <tr>
                 <td style="font-family: 'Inter', sans-serif;">${itemsSummary}</td>
+                <td style="font-family: 'Inter', sans-serif;">${typeSummary}</td>
                 <td style="font-family: 'Inter', sans-serif;">${notesSummary}</td>
                 <td style="font-family: 'Inter', sans-serif;">${quantitySummary}</td>
                 <td style="font-family: 'Inter', sans-serif;">Rp ${total.toLocaleString('id-ID')}</td>
@@ -188,10 +188,8 @@
             ordersTableBody.insertAdjacentHTML('beforeend', rowHTML);
           });
 
-
           grandTotalElement.textContent = grandTotal.toLocaleString('id-ID');
         }
-
 
         renderOrders();
       });
@@ -202,5 +200,5 @@
       integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
       crossorigin="anonymous"
     ></script>
-  </body>
+  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93e10750bdf5b058',t:'MTc0Njk1OTcxNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
